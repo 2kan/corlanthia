@@ -3,3 +3,8 @@ Starting up a new project: a text adventure. It's written in Java and the develo
 Corlanthia will be a relatively simple text adventure until I am happy with the engine and how things work. Once I'm happy with it all, I'll start to add new features and make the entire game something that's worth playing.
 
 Until then, I will commit the source code once I'm finished with it for the night, if anyone wants to take it and have a look at it or whatever, go ahead; just don't say that it's yours unless you have made substantial edits to it :)
+
+
+** NOTE **
+
+I am aiming to get some kind of "demo" done as a basic proof-of-concept, and then I will decide if I want to take it further. I'm hoping that this will be done in the next 6 weeks as the holidays are coming up close and I'll be able to get a lot of work done. By then there should be a nice system setup and it will be playable.... somewhat.
