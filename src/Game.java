@@ -15,10 +15,13 @@
  * 
  *
  */
-
+import java.util.*;
 
 
 public class Game {
+	
+	private static Scanner GameScan	= new Scanner(System.in);
+	private static String GameInput	= "";
 	
 	public static void main(String[] args) {
 		Menus.MainMenu();
@@ -26,9 +29,11 @@ public class Game {
 	}
 	
 	public static void Start() {
-		boolean firstRun	= true;
-		int[][] room	= Rooms.GetRoom(firstRun);
+		int[][] room	= Rooms.GetRoom(1);
+		Rooms.currentRoom	= 1;
 		
+		System.out.println(Rooms.currentRoom+".");
+		System.out.println("Layout of room:");
 		for(int i=0; i<room.length; i++) {
 			for(int j=0; j<room[i].length; j++){
 				System.out.print(room[i][j]);
@@ -36,7 +41,38 @@ public class Game {
 			System.out.println();
 		}
 		
+		instruction(1, false);
 		
+	}
+	
+	public static void instruction(int inRoom, boolean iterated) {
+		
+		if(iterated == false) {
+			System.out.println(">> "+Rooms.RoomDescription);
+			iterated	= true;
+		}
+		System.out.print("> ");
+		GameInput	= GameScan.nextLine();
+		
+		if(GameInput.equalsIgnoreCase("help")) {
+			Menus.Help();
+			System.out.println();
+			instruction(inRoom, true);
+		}
+		if(GameInput.equalsIgnoreCase("exit")) {
+			Menus.MainMenu();
+		}
+		
+		if(GameInput.equalsIgnoreCase("north") ||
+				GameInput.equalsIgnoreCase("east") ||
+				GameInput.equalsIgnoreCase("south") ||
+				GameInput.equalsIgnoreCase("west")) {
+			Rooms.ChangeRoom(GameInput, inRoom);
+		}
+		
+		else { System.out.println("You did not enter a cardinal direction."); };
+		
+		instruction(Rooms.currentRoom, false);
 	}
 	
 	

@@ -7,7 +7,7 @@ public class Menus {
 	
 	public static void MainMenu() {
 		System.out.println("" +
-				"Welcome to CORLANTHIA.\n\n" +
+				"Welcome to the CORLANTHIA proof-of-concept demo.\n\n" +
 				"	1. Play\n" +
 				"	2. About\n" +
 				"	3. Exit\n");
@@ -26,7 +26,7 @@ public class Menus {
 
 	private static void About() {
 		System.out.println("" +
-				"Corlanthia is a text adventure game\n\n" +
+				"\nCorlanthia is a text adventure game\n\n" +
 				"Version 0.1\n" +
 				"This is merely a proof-of-concept demo and does not represent what the finished game will be.\n\n" +
 				"Type 'exit' to go back to the main menu");
@@ -36,6 +36,16 @@ public class Menus {
 			MainMenu();
 		}
 		
+	}
+	
+	public static void Help() {
+		System.out.println("" +
+				"Commands:" +
+				"north		exit through the northern door.\n" +
+				"east		exit through the eastern door.\n" +
+				"south		exit through the southern door.\n" +
+				"west		exit through the western door.\n" +
+				"exit		go back to the main menu.\n");
 	}
 	
 	
