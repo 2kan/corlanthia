@@ -47,7 +47,9 @@ public class Game {
 	
 	public static void instruction(int inRoom, boolean iterated) {
 		
+
 		if(iterated == false) {
+			System.out.println("\n\n --- "+Rooms.currentRoomName+" --- \n");
 			System.out.println(">> "+Rooms.RoomDescription);
 			iterated	= true;
 		}
@@ -70,9 +72,19 @@ public class Game {
 			Rooms.ChangeRoom(GameInput, inRoom);
 		}
 		
-		else { System.out.println("You did not enter a cardinal direction."); };
+		StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
+		String command					= commandTokens.nextToken();
+		if(command.equals("inspect")) {
+			Actions.Inspect(commandTokens.nextToken());
+		}
 		
-		instruction(Rooms.currentRoom, false);
+		if(Rooms.RoomChange == true) {
+			iterated	= false;
+		} else {
+			iterated	= true;
+		}
+		
+		instruction(Rooms.currentRoom, iterated);
 	}
 	
 	
