@@ -17,7 +17,7 @@ public class Rooms {
 	public static String currentRoomName	= "";
 	public static int currentRoom			= 0;
 	public static String RoomDescription	= "";
-	
+	public static boolean RoomChange		= false;
 	public static int[][] GetRoom(int current) {
 		int[][] room	= {{}};
 		switch(current){
@@ -84,6 +84,7 @@ public class Rooms {
 		}
 		
 		int[][] room	= GetRoom(NewRoom);
+		RoomChange		= true;
 		return room;
 	}
 
