@@ -1,17 +1,13 @@
-Starting up a new project: a text adventure. It's written in Java and the development will probably be slow since I have a lot of school work and I'm in exam week at the moment, but I am determined to finish this.
-
-Corlanthia will be a relatively simple text adventure until I am happy with the engine and how things work. Once I'm happy with it all, I'll start to add new features and make the entire game something that's worth playing.
+Corlanthia is an in-development text adventure game written in Java.
 
 
 ** UPDATE **
 
-Corlanthia now has basic gameplay features implemented. Currently the user can only move in cardinal directions (i.e. north, south, etc) and upon entering a new room a message is displayed. The message assumes that you are entering the room for the first time, so a message for repeat entry still needs to be implemented.
+Corlanthia now has basic gameplay features implemented. Currently the user can only move in cardinal directions (i.e. north, south, etc) and upon entering a new room a message is displayed. The system assumes that you are entering the room for the first time, so a message for repeat entry still needs to be implemented.
 
 I added some average story to it and a reference to portal :)
 
 Development will continue tomorrow.
 
 
-** NOTE **
-
-I am aiming to get some kind of "demo" done as a basic proof-of-concept, and then I will decide if I want to take it further. I'm hoping that this will be done in the next 6 weeks as the holidays are coming up close and I'll be able to get a lot of work done. By then there should be a nice system setup and it will be playable.... somewhat.
+Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License. More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
