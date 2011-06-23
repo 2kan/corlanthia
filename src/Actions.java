@@ -2,8 +2,8 @@ import java.util.Random;
 
 public class Actions {
 	
-	public static int[] Inventory	= {0,0,0,0,0,0,0,0};
-	public static int ItemCount		= 0;
+	public static double[] Inventory	= {0,0,0,0,0,0,0,0};
+	public static int ItemCount			= 0;
 	
 	public static void CheckRoom(int room) {
 		int[][] roomLayout	= Rooms.GetRoom(room);
@@ -62,7 +62,7 @@ public class Actions {
 			System.out.println(Items.LockDoorDesc[i]);
 		}
 		if(Object.equals("hatch") && Items.Hatch == true) {
-			
+			System.out.println(Items.HatchDesc[i]);
 		}
 		CloseRoom();
 	}
@@ -82,7 +82,6 @@ public class Actions {
 					Inventory[l]	= 8;
 					added	= true;
 					break;
-					
 				}
 			}
 		}
@@ -110,11 +109,12 @@ public class Actions {
 		
 		System.out.println(">> You have "+count+" slots left in your inventory");
 		for(int m=0; m<Inventory.length; m++) {
-			switch(Inventory[m]) {
-			case 7:	System.out.print("Key ");
-			case 8: System.out.print("Book ");
+			if(Inventory[m] == 7) {
+				System.out.println("Key ");
 			}
-			// System.out.print(Inventory[m]+" ");
+			if(Inventory[m] == 8) {
+				System.out.println("Book ");
+			}
 		}
 		System.out.println();
 	}
@@ -182,5 +182,30 @@ public class Actions {
 		}
 		
 		CloseRoom();
+	}
+	
+	public static void Drop(String Item) {
+		int ItemID		= 0;
+		int in			= 0;
+		boolean dropped	= false;
+		
+		if(Item.equals("key")) {
+			ItemID	= 7;
+		}
+		if(Item.equals("book")) {
+			ItemID	= 8;
+		}
+		
+		for(in=0; in<Inventory.length; in++) {
+			if(Inventory[in] == ItemID) {
+				Inventory[in]	= 0;
+				dropped	= true;
+				break;
+			}
+		}
+		
+		if(dropped == false) {
+			System.out.println("You do not have that in your inventory.");
+		}
 	}
 }

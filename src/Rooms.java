@@ -3,6 +3,7 @@
  * Class defines what the rooms look like with 2d arrays.
  * Numbers represent an object.
  * 
+ * Item ID numbers
  * 0	air
  * 1	wall
  * 2	window
@@ -11,6 +12,17 @@
  * 5	table
  * 6	lamp
  * 7	key
+ * 
+ * Rooms
+ * 1	Starting Hall
+ * 2	King's Hall
+ * 3	T-Lobby
+ * 4	Eastern Lounge
+ * 5	Library
+ * 6	Garden Room
+ * 7	Balconey
+ * 8	Initiation Chamber
+ * 9	Final Boss
  * 
  */
 
@@ -93,7 +105,6 @@ public class Rooms {
 
 	public static int[][] StartingHall() {
 		
-		// Room number	= 1;
 		int[][] room	=  {{1,1,1,1,1,1,1},
 							{1,0,8,10,0,0,1},
 							{1,0,0,0,0,0,1},
@@ -101,6 +112,7 @@ public class Rooms {
 							{1,0,0,0,0,0,1},
 							{1,0,0,0,0,0,1},
 							{1,1,1,1,1,1,1}};
+		
 		currentRoomName	= "Starting Hall";
 		currentRoom		= 1;
 		RoomDescription	= "You are in a small hall. It is cold and there is a ladder going up through a hatch. It is obvious " +
@@ -118,7 +130,7 @@ public class Rooms {
 							{1,0,0,0,0,0,1},
 							{1,0,0,0,0,0,1},
 							{1,1,1,1,1,1,1}};
-		currentRoomName	= "Kings Hall";
+		currentRoomName	= "King's Hall";
 		currentRoom		= 2;
 		RoomDescription	= "You climb through the hatch and you are now in a bigger hall. There are red carpets magestically " +
 				"hanging from the walls, next to the enormous painting of a proud looking king. There is one door at the " +

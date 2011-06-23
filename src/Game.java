@@ -83,6 +83,12 @@ public class Game {
 		if(command.equals("pickup")) {
 			Actions.Pickup(commandTokens.nextToken(), Rooms.currentRoom);
 		}
+		if(command.equals("look")) {
+			Actions.Look();
+		}
+		if(command.equals("drop")) {
+			Actions.Drop(commandTokens.nextToken());
+		}
 		
 		
 		if(Rooms.RoomChange == true) {

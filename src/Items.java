@@ -16,5 +16,18 @@ public class Items {
 	public static String[] BookDesc		= {"A worn out old book.","A torn up book.","It looks old."};
 	public static String[] LockDesc		= {"An old old lock.","A scratched up lock.","A regular lock."};
 	public static String[] HatchDesc	= {"An old hatch.","It's made of old pine wood.","It's unlocked."};
-
+	
+	
+	/*
+	// Items in each room.
+	public static int[] StartingHall	= {};
+	public static int[] KingsHall		= {};
+	public static int[] TLobby			= {};
+	public static int[] EasternLounge	= {};
+	public static int[] Library			= {};
+	public static int[] GardenRoom		= {};
+	public static int[] Balconey		= {};
+	public static int[] InitChamber		= {};
+	public static int[] FinalBoss		= {};
+	*/
 }
