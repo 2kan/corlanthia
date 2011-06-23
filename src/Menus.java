@@ -40,7 +40,7 @@ public class Menus {
 	
 	public static void Help() {
 		System.out.println("" +
-				"Commands:" +
+				"Commands:\n" +
 				"north		exit through the northern door.\n" +
 				"east		exit through the eastern door.\n" +
 				"south		exit through the southern door.\n" +

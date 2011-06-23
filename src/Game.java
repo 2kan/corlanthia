@@ -75,8 +75,15 @@ public class Game {
 		StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
 		String command					= commandTokens.nextToken();
 		if(command.equals("inspect")) {
-			Actions.Inspect(commandTokens.nextToken());
+			Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
 		}
+		if(command.equals("inventory") || command.equals("invsee")) {
+			Actions.InvSee();
+		}
+		if(command.equals("pickup")) {
+			Actions.Pickup(commandTokens.nextToken(), Rooms.currentRoom);
+		}
+		
 		
 		if(Rooms.RoomChange == true) {
 			iterated	= false;

@@ -7,8 +7,10 @@
  * 1	wall
  * 2	window
  * 3	door
- * 4	table
- * 5	lamp
+ * 4	locked door
+ * 5	table
+ * 6	lamp
+ * 7	key
  * 
  */
 
@@ -18,6 +20,7 @@ public class Rooms {
 	public static int currentRoom			= 0;
 	public static String RoomDescription	= "";
 	public static boolean RoomChange		= false;
+	
 	public static int[][] GetRoom(int current) {
 		int[][] room	= {{}};
 		switch(current){
@@ -92,7 +95,7 @@ public class Rooms {
 		
 		// Room number	= 1;
 		int[][] room	=  {{1,1,1,1,1,1,1},
-							{1,0,0,0,0,0,1},
+							{1,0,8,10,0,0,1},
 							{1,0,0,0,0,0,1},
 							{1,0,0,0,0,0,1},
 							{1,0,0,0,0,0,1},
@@ -136,7 +139,7 @@ public class Rooms {
 		currentRoomName	= "T-Lobby";
 		currentRoom		= 3;
 		RoomDescription	= "As you close the wooden door behind you, you are rushed with a sense of fear from the sound of a " +
-				"shotgun and the intense wind coming from the western doorway.";
+				"shotgun and the intense wind coming from the eastern doorway.";
 		return room;
 	}
 	
