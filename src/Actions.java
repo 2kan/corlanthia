@@ -6,20 +6,17 @@ public class Actions {
 	public static int ItemCount			= 0;
 	
 	public static void CheckRoom(int room) {
-		int[][] roomLayout	= Rooms.GetRoom(room);
-		for(int j=0; j<roomLayout.length; j++) {
-			for(int k=0; k<roomLayout[j].length; k++) {
-				switch(roomLayout[j][k]) {
-					case 2: 	Items.Window	= true;	ItemCount++;	break;
-					case 3: 	Items.Door		= true;	ItemCount++;	break;
-					case 4: 	Items.LockDoor	= true;	ItemCount++;	break;
-					case 5: 	Items.Table		= true;	ItemCount++;	break;
-					case 6: 	Items.Lamp		= true; ItemCount++;	break;
-					case 7: 	Items.Key		= true;	ItemCount++;	break;
-					case 8: 	Items.Book		= true;	ItemCount++;	break;
-					case 9: 	Items.Lock		= true; ItemCount++;	break;
-					case 10:	Items.Hatch		= true; ItemCount++;	break;
-				}
+		for(int j=0; j<Items.RoomItems[room-1].length-1; j++) {
+			switch(Items.RoomItems[room-1][j]) {
+				case 2: 	Items.Window	= true;	ItemCount++;	break;
+				case 3: 	Items.Door		= true;	ItemCount++;	break;
+				case 4: 	Items.LockDoor	= true;	ItemCount++;	break;
+				case 5: 	Items.Table		= true;	ItemCount++;	break;
+				case 6: 	Items.Lamp		= true; ItemCount++;	break;
+				case 7: 	Items.Key		= true;	ItemCount++;	break;
+				case 8: 	Items.Book		= true;	ItemCount++;	break;
+				case 9: 	Items.Lock		= true; ItemCount++;	break;
+				case 10:	Items.Hatch		= true; ItemCount++;	break;
 			}
 		}
 	}
@@ -32,6 +29,25 @@ public class Actions {
 		Items.Lamp		= false;
 		Items.Key		= false;
 		Items.Book		= false;
+	}
+	
+	public static void Debug(String command1, String command2) {
+		if(command1.equals("showitems")) {
+			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
+				System.out.print(Items.RoomItems[Rooms.currentRoom-1][i]+" ");
+			}
+			System.out.println();
+		}
+		if(command1.equals("additem")) {
+			Integer.parseInt(command2);
+			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
+				if(Items.RoomItems[Rooms.currentRoom-1][i] == 0) {
+					Items.RoomItems[Rooms.currentRoom-1][i]	= Integer.parseInt(command2);
+					System.out.println("Item added to room.");
+					break;
+				}
+			}
+		}
 	}
 	
 	public static void Inspect(String Object, int Room) {
@@ -67,37 +83,6 @@ public class Actions {
 		CloseRoom();
 	}
 	
-	public static void Pickup(String Item, int Room) {
-		CheckRoom(Room);
-		boolean added	= false;
-		
-		for(int l=0; l<Inventory.length; l++) {
-			if(Inventory[l] == 0) {
-				if(Item.equals("key") && Items.Key == true) {
-					Inventory[l]	= 7;
-					added	= true;
-					break;
-				}
-				if(Item.equals("book") && Items.Book == true) {
-					Inventory[l]	= 8;
-					added	= true;
-					break;
-				}
-			}
-		}
-		
-		if(Item.equals("window") || Item.equals("door") || Item.equals("locked-door") ||
-				Item.equals("desk") || Item.equals("lamp")|| Item.equals("lock") || Item.equals("hatch")) {
-			System.out.println("You can't pick that up.");
-		}
-		if(added == false) {
-			System.out.println("There isn't a "+Item+" in here.");
-		}
-		
-		CloseRoom();
-		
-	}
-	
 	public static void InvSee() {
 		int count	= 0;
 		for(int m=0; m<Inventory.length; m++) {
@@ -110,10 +95,10 @@ public class Actions {
 		System.out.println(">> You have "+count+" slots left in your inventory");
 		for(int m=0; m<Inventory.length; m++) {
 			if(Inventory[m] == 7) {
-				System.out.println("Key ");
+				System.out.print("Key ");
 			}
 			if(Inventory[m] == 8) {
-				System.out.println("Book ");
+				System.out.print("Book ");
 			}
 		}
 		System.out.println();
@@ -125,15 +110,27 @@ public class Actions {
 		
 		for(int i=0; i<Inventory.length; i++) {
 			if(Inventory[i] == 0) {
-				if(Items.Key == true && Item.equals("key")) {
-					Inventory[i]	= 7;
+				for(int j=0; j<Items.RoomItems.length-1; j++) {
+					System.out.println(i+" "+j+" "+Rooms.currentRoom);
+					if(Item.equals("key") && Items.RoomItems[Rooms.currentRoom-1][j] == 7) {
+						Inventory[i]	= 7;
+						Items.RoomItems[Rooms.currentRoom-1][j]	= 0;
+						added	= true;
+						break;
+					}
+					if(Item.equals("book") && Items.RoomItems[Rooms.currentRoom-1][j] == 8) {
+						Inventory[i]	= 8;
+						Items.RoomItems[Rooms.currentRoom-1][j]	= 0;
+						added	= true;
+						break;
+					}
 				}
-				if(Items.Book == true && Item.equals("book")) {
-					Inventory[i]	= 8;
+				
+				if(added == true) {
+					System.out.println(Item+" has been added to your inventory.");
+					added	= true;
+					break;
 				}
-				System.out.println(Item+" has been added to your inventory.");
-				added	= true;
-				break;
 			}
 		}
 		
@@ -162,22 +159,22 @@ public class Actions {
 		if(Items.LockDoor == true) {
 			System.out.println(" * Locked Door");
 		}
-		if(Items.Table) {
+		if(Items.Table == true) {
 			System.out.println(" * Desk");
 		}
-		if(Items.Lamp) {
+		if(Items.Lamp == true) {
 			System.out.println(" * Lamp");
 		}
-		if(Items.Key) {
+		if(Items.Key == true) {
 			System.out.println(" * Key");
 		}
-		if(Items.Book) {
+		if(Items.Book == true) {
 			System.out.println(" * Book");
 		}
-		if(Items.Lock) {
+		if(Items.Lock == true) {
 			System.out.println(" * Lock");
 		}
-		if(Items.Hatch) {
+		if(Items.Hatch == true) {
 			System.out.println(" * Hatch");
 		}
 		
@@ -199,6 +196,14 @@ public class Actions {
 		for(in=0; in<Inventory.length; in++) {
 			if(Inventory[in] == ItemID) {
 				Inventory[in]	= 0;
+				dropped	= true;
+				break;
+			}
+			if(Item.equals("all") || Item.equals("*")) {
+				for(int k=0; k<Inventory.length; k++) {
+					Inventory[k]	= 0;
+				}
+				System.out.println("Inventory cleared.");
 				dropped	= true;
 				break;
 			}

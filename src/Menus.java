@@ -16,7 +16,7 @@ public class Menus {
 		
 		
 		switch(selection) {
-		case 1:	Game.Start(); break;
+		case 1:	Game.Intro(); break;
 		case 2: About(); break;
 		case 3: System.exit(1);
 		
@@ -45,7 +45,12 @@ public class Menus {
 				"east		exit through the eastern door.\n" +
 				"south		exit through the southern door.\n" +
 				"west		exit through the western door.\n" +
-				"exit		go back to the main menu.\n");
+				"exit		go back to the main menu.\n" +
+				"inspect	get more information about an item.\n" +
+				"inventory	see your inventory.\n" +
+				"pickup		pickup an item.\n" +
+				"look		get a list of all of the items in the room.\n" +
+				"drop		drop an item out of your inventory.");
 	}
 	
 	

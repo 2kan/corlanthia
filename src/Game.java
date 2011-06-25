@@ -25,7 +25,14 @@ public class Game {
 	
 	public static void main(String[] args) {
 		Menus.MainMenu();
-		
+	}
+	
+	public static void Intro() {
+		System.out.println("You wake up in a daze, there is a lump on your head and you don't know how it got there. " +
+				"The last thing you can remember was when you were out drinking with your mates and some unexpected +" +
+				"visitors arrived.\n\n" +
+				"The room you are in seems like it was from the medeval times and all you can smell are decaying rats.");
+		Start();
 	}
 	
 	public static void Start() {
@@ -47,10 +54,10 @@ public class Game {
 	
 	public static void instruction(int inRoom, boolean iterated) {
 		
-
-		if(iterated == false) {
-			System.out.println("\n\n --- "+Rooms.currentRoomName+" --- \n");
+		System.out.println("\n --- "+Rooms.currentRoomName+" --- \n");
+		if(iterated == false && Rooms.visitedRooms[Rooms.currentRoom] == 0) {
 			System.out.println(">> "+Rooms.RoomDescription);
+			Rooms.visitedRooms[Rooms.currentRoom]	= 1;
 			iterated	= true;
 		}
 		System.out.print("> ");
@@ -74,20 +81,35 @@ public class Game {
 		
 		StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
 		String command					= commandTokens.nextToken();
+		int commandCount				= commandTokens.countTokens();
+		
 		if(command.equals("inspect")) {
-			Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
+			if(commandCount == 0) {
+				System.out.println("Type 'inspect' followed by an item to inspect.");
+			} else {
+				Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
+			}
 		}
 		if(command.equals("inventory") || command.equals("invsee")) {
 			Actions.InvSee();
 		}
 		if(command.equals("pickup")) {
-			Actions.Pickup(commandTokens.nextToken(), Rooms.currentRoom);
+			Actions.Pickup(commandTokens.nextToken());
 		}
 		if(command.equals("look")) {
 			Actions.Look();
+			instruction(Rooms.currentRoom, true);
 		}
 		if(command.equals("drop")) {
 			Actions.Drop(commandTokens.nextToken());
+		}
+		if(command.equals("debug")) {
+			if(commandCount == 1) {
+				Actions.Debug(commandTokens.nextToken(), null);
+			}
+			if(commandCount == 2) {
+				Actions.Debug(commandTokens.nextToken(), commandTokens.nextToken());
+			}
 		}
 		
 		

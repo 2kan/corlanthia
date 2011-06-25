@@ -3,6 +3,7 @@ public class Items {
 	
 	// Check if the item exists in the room. These variables are changed when the user types 'look' or 'inspect'.
 	public static boolean Window,Table,Lamp,Key,Lock,Desk,Book,Door,LockDoor,Hatch	= false;
+	public static int[] taken	= {};
 	
 	
 	// Descriptions of various items.
@@ -18,9 +19,9 @@ public class Items {
 	public static String[] HatchDesc	= {"An old hatch.","It's made of old pine wood.","It's unlocked."};
 	
 	
-	/*
 	// Items in each room.
-	public static int[] StartingHall	= {};
+	public static int[][] RoomItems		=  {{8,0,0,0,0,0,0,0},
+											{7,7}};
 	public static int[] KingsHall		= {};
 	public static int[] TLobby			= {};
 	public static int[] EasternLounge	= {};
@@ -29,5 +30,4 @@ public class Items {
 	public static int[] Balconey		= {};
 	public static int[] InitChamber		= {};
 	public static int[] FinalBoss		= {};
-	*/
 }
