@@ -1,7 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.1.8
+ * @version	0.1.9
  * 
  * Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License.
  * More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
@@ -22,7 +22,7 @@ public class Game {
 	
 	private static Scanner GameScan	= new Scanner(System.in);
 	private static String GameInput	= "";
-	public static String Version	= "Corlanthia proof-of-concept version 0.1.8_1";
+	public static String Version	= "Corlanthia proof-of-concept v0.1.9";
 	
 	public static void main(String[] args) {
 		Menus.MainMenu();
@@ -106,7 +106,7 @@ public class Game {
 		if(command.equals("pickup")) {
 			Actions.Pickup(commandTokens.nextToken());
 		}
-		if(command.equals("look")) {
+		if(command.equals("lookat")) {
 			Actions.Look();
 			instruction(Rooms.currentRoom, true);
 		}
@@ -115,13 +115,17 @@ public class Game {
 		}
 		if(command.equals("debug")) {
 			if(commandCount == 1) {
-				Actions.Debug(commandTokens.nextToken(), null);
+				Debug.Actions(commandTokens.nextToken(), null);
 			}
 			if(commandCount == 2) {
-				Actions.Debug(commandTokens.nextToken(), commandTokens.nextToken());
+				Debug.Actions(commandTokens.nextToken(), commandTokens.nextToken());
 			}
 		}
-		
+		if(command.equals("read")) {
+			if(commandTokens.hasMoreTokens()) {
+				Actions.Read(commandTokens.nextToken());
+			}
+		}
 		
 		if(Rooms.RoomChange == true) {
 			iterated	= false;
