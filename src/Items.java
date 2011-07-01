@@ -18,16 +18,11 @@ public class Items {
 	public static String[] LockDesc		= {"An old old lock.","A scratched up lock.","A regular lock."};
 	public static String[] HatchDesc	= {"An old hatch.","It's made of old pine wood.","It's unlocked."};
 	
+	// The locations of ListItemsID correspond to ListItems. For example, ListItems[1] is the name for ListItemsID[1].
+	public static String[] ListItems	= {"key","book"};
+	public static int[] ListItemsID		= {7,8};
 	
 	// Items in each room.
-	public static int[][] RoomItems		=  {{8,0,0,0,0,0,0,0},
+	public static int[][] RoomItems		=  {{8},
 											{7,7}};
-	public static int[] KingsHall		= {};
-	public static int[] TLobby			= {};
-	public static int[] EasternLounge	= {};
-	public static int[] Library			= {};
-	public static int[] GardenRoom		= {};
-	public static int[] Balconey		= {};
-	public static int[] InitChamber		= {};
-	public static int[] FinalBoss		= {};
 }
