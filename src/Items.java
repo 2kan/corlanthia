@@ -1,3 +1,17 @@
+/*
+ * Item ID numbers
+ * 0	air
+ * 1	wall
+ * 2	window
+ * 3	door
+ * 4	locked door
+ * 5	table
+ * 6	lamp
+ * 7	key
+ * 8	book
+ * 9	letter
+ * 
+ */
 
 public class Items {
 	
@@ -7,22 +21,25 @@ public class Items {
 	
 	
 	// Descriptions of various items.
-	public static String[] WallDesc		= {"This wall is made of stone.","It looks old.","A cold stone wall."};
-	public static String[] WindowDesc	= {"A window made of scratched glass.","A regular window.","A window."};
-	public static String[] DoorDesc		= {"A sold wooden door.","An old door.","An old looking wooden door."};
-	public static String[] LockDoorDesc	= {"A locked door.","A locked door.... maybe there's a key around here.","It's locked."};
-	public static String[] DeskDesc		= {"A fancy wooden desk.","A desk with a locked drawer.","It looks old."};
-	public static String[] LampDesc		= {"A worn out golden lamp.","An old lamp.","It's a small golden lamp."};
-	public static String[] KeyDesc		= {"A rusty old key.","An old key.","It looks like it could open something...."};
-	public static String[] BookDesc		= {"A worn out old book.","A torn up book.","It looks old."};
-	public static String[] LockDesc		= {"An old old lock.","A scratched up lock.","A regular lock."};
-	public static String[] HatchDesc	= {"An old hatch.","It's made of old pine wood.","It's unlocked."};
+	public static String[][] ItemDesc	= {{"Wall","This wall is made of stone.","It looks old.","A cold stone wall."},
+										   {"Window","A window made of scratched glass.","A regular window.","A window."},
+										   {"Door","A sold wooden door.","An old door.","An old looking wooden door."},
+										   {"LockedDoor","A locked door.","A locked door.... maybe there's a key around here.","It's locked."},
+										   {"Desk","A fancy wooden desk.","A desk with a locked drawer.","It looks old."},
+										   {"Lamp","A worn out golden lamp.","An old lamp.","It's a small golden lamp."},
+										   {"Key","A rusty old key.","An old key.","It looks like it could open something...."},
+										   {"Book","A worn out old book.","A torn up book.","It looks old."},
+										   {"Lock","An old old lock.","A scratched up lock.","A regular lock."},
+										   {"Hatch","An old hatch.","It's made of old pine wood.","It's unlocked."}};
 	
 	// The locations of ListItemsID correspond to ListItems. For example, ListItems[1] is the name for ListItemsID[1].
-	public static String[] ListItems	= {"key","book"};
-	public static int[] ListItemsID		= {7,8};
+	public static String[] ListItems	= {"key","book","letter"};
+	public static int[] ListItemsID		= {7,8,9};
 	
 	// Items in each room.
-	public static int[][] RoomItems		=  {{8},
-											{7,7}};
+	public static int[][] RoomItems		=  {{8,0,0,0,0,0,0,0},
+											{7,7,0,0,0,0,0,0}};
+	
+	public static String[] BookInfo		= {"BEWARE THE MAN IN THE TRENCH COAT.",""};
+	public static String[] LetterInfo	= {"La de da :D"};
 }
