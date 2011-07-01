@@ -5,6 +5,15 @@ public class Actions {
 	public static double[] Inventory	= {0,0,0,0,0,0,0,0};
 	public static int ItemCount			= 0;
 	
+	public static void CountItems(int Room) {
+		ItemCount	= 0;
+		for(int i=0; i<Items.RoomItems[Room-1].length; i++) {
+			if(Items.RoomItems[Room-1][i] != 0) {
+				ItemCount++;
+			}
+		}
+	}
+	
 	public static void CheckRoom(int room) {
 		for(int j=0; j<Items.RoomItems[room-1].length-1; j++) {
 			switch(Items.RoomItems[room-1][j]) {
@@ -31,6 +40,30 @@ public class Actions {
 		Items.Book		= false;
 	}
 	
+	public static int GetItemID(String oldItem) {
+		int ID	= 0;
+		
+		for(int i=0; i<Items.ListItems.length; i++) {
+			if(Items.ListItems[i].equalsIgnoreCase(oldItem)) {
+				ID	= Items.ListItemsID[i];
+				break;
+			}
+		}
+		return ID;
+	}
+	
+	public static String GetItemName(int ItemID) {
+		String ItemName	= "";
+		
+		for(int i=0; i<Items.ListItemsID.length; i++) {
+			if(Items.ListItemsID[i] == ItemID) {
+				ItemName	= Items.ListItems[i];
+			}
+		}
+		
+		return ItemName;
+	}
+	
 	public static void Debug(String command1, String command2) {
 		if(command1.equals("showitems")) {
 			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
@@ -47,6 +80,9 @@ public class Actions {
 					break;
 				}
 			}
+		}
+		if(command1.equals("itemcount")) {
+			CountItems(Rooms.currentRoom);
 		}
 	}
 	
@@ -105,80 +141,42 @@ public class Actions {
 	}
 	
 	public static void Pickup(String Item) {
-		CheckRoom(Rooms.currentRoom);
 		boolean added	= false;
+		int ItemID	= GetItemID(Item);
 		
-		for(int i=0; i<Inventory.length; i++) {
-			if(Inventory[i] == 0) {
-				for(int j=0; j<Items.RoomItems.length-1; j++) {
-					System.out.println(i+" "+j+" "+Rooms.currentRoom);
-					if(Item.equals("key") && Items.RoomItems[Rooms.currentRoom-1][j] == 7) {
-						Inventory[i]	= 7;
-						Items.RoomItems[Rooms.currentRoom-1][j]	= 0;
-						added	= true;
-						break;
-					}
-					if(Item.equals("book") && Items.RoomItems[Rooms.currentRoom-1][j] == 8) {
-						Inventory[i]	= 8;
-						Items.RoomItems[Rooms.currentRoom-1][j]	= 0;
-						added	= true;
+		for(int i=0; i<Items.RoomItems.length; i++) {
+			if(Items.RoomItems[Rooms.currentRoom-1][i] == ItemID) {
+				for(int j=0; j<Inventory.length; j++) {
+					if(Inventory[j] == 0) {
+						Inventory[j]	= ItemID;
+						added			= true;
+						System.out.println("Picked up "+Item+".");
 						break;
 					}
 				}
-				
-				if(added == true) {
-					System.out.println(Item+" has been added to your inventory.");
-					added	= true;
-					break;
-				}
+				Items.RoomItems[Rooms.currentRoom-1][i]	= 0;
+				break;
 			}
 		}
 		
 		if(added != true) {
 			System.out.println("There isn't a "+Item+" in this room.");
 		}
-		
-		CloseRoom();
 	}
 	
 	public static void Look() {
-		CheckRoom(Rooms.currentRoom);
-		
+		CountItems(Rooms.currentRoom);
 		if(ItemCount > 1 || ItemCount == 0) {
-			System.out.println("There are "+ItemCount+" objects.\n");
+			System.out.println("There are "+ItemCount+" objects.");
 		} else {
-			System.out.println("There is 1 object.\n");
+			System.out.println("There is 1 object.");
 		}
 		
-		if(Items.Window == true) {
-			System.out.println(" * Window");
+		if(ItemCount != 0) {
+			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
+				System.out.println(" * "+GetItemName(Items.RoomItems[Rooms.currentRoom-1][i]));
+			}
 		}
-		if(Items.Door == true) {
-			System.out.println(" * Door");
-		}
-		if(Items.LockDoor == true) {
-			System.out.println(" * Locked Door");
-		}
-		if(Items.Table == true) {
-			System.out.println(" * Desk");
-		}
-		if(Items.Lamp == true) {
-			System.out.println(" * Lamp");
-		}
-		if(Items.Key == true) {
-			System.out.println(" * Key");
-		}
-		if(Items.Book == true) {
-			System.out.println(" * Book");
-		}
-		if(Items.Lock == true) {
-			System.out.println(" * Lock");
-		}
-		if(Items.Hatch == true) {
-			System.out.println(" * Hatch");
-		}
-		
-		CloseRoom();
 	}
 	
 	public static void Drop(String Item) {
@@ -186,12 +184,7 @@ public class Actions {
 		int in			= 0;
 		boolean dropped	= false;
 		
-		if(Item.equals("key")) {
-			ItemID	= 7;
-		}
-		if(Item.equals("book")) {
-			ItemID	= 8;
-		}
+		ItemID	= GetItemID(Item);
 		
 		for(in=0; in<Inventory.length; in++) {
 			if(Inventory[in] == ItemID) {
@@ -211,6 +204,9 @@ public class Actions {
 		
 		if(dropped == false) {
 			System.out.println("You do not have that in your inventory.");
+		}
+		else {
+			System.out.println(Item+" dropped.");
 		}
 	}
 }
