@@ -1,0 +1,29 @@
+v0.1
+
++ Added rooms.
++ Added cardinal movement.
++ Added room messages.
+
+
+v0.1.1
+
++ Added 'book' and 'key'.
++ Added 'inspect' command.
++ Added 'pickup' command.
++ Added 'inventory' and 'invsee' command.
+* Modified layout of room methods
+
+v0.1.2
+
++ Added 'debug' command and commands that go with it.
+* Modified Game.java file to refine/tweak mechanisms.
+* Modified room methods.
+
+v0.1.8
+
++ Added a method to count the items in the room.
++ Added 'countitems' to the debug method.
++ Added a way to convert item id numbers into the names of the item.
++ Added a way to convert item names into the appropriate item id.
+* Re-implemented pickup, drop and look methods.
+* Minor changes to item system.
