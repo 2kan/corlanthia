@@ -15,6 +15,8 @@ Possibly re-implement the inspect command and remove CheckRoom and CloseRoom met
 
 Add more debugging commands.
 
+Eventually add support for NPC-like features.
+
 
 ** LICENSE INFO **
 
