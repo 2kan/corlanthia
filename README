@@ -1,10 +1,21 @@
 Corlanthia is an in-development text adventure game written in Java.
 
-
-** UPDATE **
-
 Corlanthia has some basic features implemented; so far users can move cardinally, inspect items, pickup items, see their inventory, drop one or many items, look in the room to see what objects are there. There is also a "debug" command that so far adds items to a room and displays all of the items in the room.
 
-Items are implemented very poorly and there are a lot of things that need to be changed if someone simply wants to add an item to the game. I will be redesigning this and it will be done for v0.2
+** UPDATE v0.1.8 **
+
++ Added a method to count the items in the room.
++ Added a debug command that displays the number of items in the room.
+* Items were redone and so was pickup, drop and look.
+
+
+** NEXT ACTION **
+
+Possibly re-implement the inspect command and remove CheckRoom and CloseRoom methods.
+
+Add more debugging commands.
+
+
+** LICENSE INFO **
 
 Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License. More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
