@@ -22,6 +22,7 @@ public class Game {
 	
 	private static Scanner GameScan	= new Scanner(System.in);
 	private static String GameInput	= "";
+	public static String Version	= "Corlanthia proof-of-concept version 0.1.8_1";
 	
 	public static void main(String[] args) {
 		Menus.MainMenu();
@@ -82,6 +83,11 @@ public class Game {
 				GameInput.equalsIgnoreCase("west")) {
 			Rooms.ChangeRoom(GameInput, inRoom);
 		}
+		
+		if(GameInput.equalsIgnoreCase("version")) {
+			System.out.println(Version);
+		}
+		
 		
 		StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
 		String command					= commandTokens.nextToken();
