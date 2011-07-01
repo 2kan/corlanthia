@@ -1,7 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.1
+ * @version	0.1.8
  * 
  * Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License.
  * More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
@@ -54,14 +54,18 @@ public class Game {
 	
 	public static void instruction(int inRoom, boolean iterated) {
 		
-		System.out.println("\n --- "+Rooms.currentRoomName+" --- \n");
-		if(iterated == false && Rooms.visitedRooms[Rooms.currentRoom] == 0) {
+		if(iterated == false) {
+			System.out.println("\n --- "+Rooms.currentRoomName+" --- \n");
 			System.out.println(">> "+Rooms.RoomDescription);
 			Rooms.visitedRooms[Rooms.currentRoom]	= 1;
 			iterated	= true;
 		}
 		System.out.print("> ");
 		GameInput	= GameScan.nextLine();
+		
+		if(GameInput.equals(null) || GameInput.equals("")) {
+			instruction(Rooms.currentRoom, true);
+		}
 		
 		if(GameInput.equalsIgnoreCase("help")) {
 			Menus.Help();
