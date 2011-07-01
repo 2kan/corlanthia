@@ -35,3 +35,18 @@ v0.1.8_1
 
 + Added 'version' command.
 * Edited 'About' text.
+
+
+v0.1.9
+
++ Added command 'lookat' to replace look, works the same as inspect
++ Added new debug command 'look', is alias to 'showitems'
++ Added Debug.java
++ Added letter item
++ Implemented function to read a book or a letter
+* Moved debug method from Actions.java to Debug.java
+* Re-coded inspect method and is now much more versatile
+* Merged all <Item>Desc arrays into a multi dimensional array
+- Removed 'look' command (still remains in debug though)
+- Removed CheckRoom and CloseRoom methods
+
