@@ -27,7 +27,7 @@ public class Menus {
 	private static void About() {
 		System.out.println("" +
 				"\nCorlanthia is a text adventure game\n\n" +
-				"Version 0.1\n" +
+				Game.Version + "\n" +
 				"This is merely a proof-of-concept demo and does not represent what the finished game will be.\n\n" +
 				"Type 'exit' to go back to the main menu");
 		Sselection = input.nextLine();
