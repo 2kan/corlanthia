@@ -14,32 +14,6 @@ public class Actions {
 		}
 	}
 	
-	public static void CheckRoom(int room) {
-		for(int j=0; j<Items.RoomItems[room-1].length-1; j++) {
-			switch(Items.RoomItems[room-1][j]) {
-				case 2: 	Items.Window	= true;	ItemCount++;	break;
-				case 3: 	Items.Door		= true;	ItemCount++;	break;
-				case 4: 	Items.LockDoor	= true;	ItemCount++;	break;
-				case 5: 	Items.Table		= true;	ItemCount++;	break;
-				case 6: 	Items.Lamp		= true; ItemCount++;	break;
-				case 7: 	Items.Key		= true;	ItemCount++;	break;
-				case 8: 	Items.Book		= true;	ItemCount++;	break;
-				case 9: 	Items.Lock		= true; ItemCount++;	break;
-				case 10:	Items.Hatch		= true; ItemCount++;	break;
-			}
-		}
-	}
-	
-	public static void CloseRoom() {
-		Items.Window	= false;
-		Items.Door		= false;
-		Items.LockDoor	= false;
-		Items.Table		= false;
-		Items.Lamp		= false;
-		Items.Key		= false;
-		Items.Book		= false;
-	}
-	
 	public static int GetItemID(String oldItem) {
 		int ID	= 0;
 		
@@ -60,63 +34,19 @@ public class Actions {
 				ItemName	= Items.ListItems[i];
 			}
 		}
-		
 		return ItemName;
-	}
-	
-	public static void Debug(String command1, String command2) {
-		if(command1.equals("showitems")) {
-			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
-				System.out.print(Items.RoomItems[Rooms.currentRoom-1][i]+" ");
-			}
-			System.out.println();
-		}
-		if(command1.equals("additem")) {
-			Integer.parseInt(command2);
-			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
-				if(Items.RoomItems[Rooms.currentRoom-1][i] == 0) {
-					Items.RoomItems[Rooms.currentRoom-1][i]	= Integer.parseInt(command2);
-					System.out.println("Item added to room.");
-					break;
-				}
-			}
-		}
-		if(command1.equals("itemcount")) {
-			CountItems(Rooms.currentRoom);
-		}
 	}
 	
 	public static void Inspect(String Object, int Room) {
 		Random number	= new Random();
 		int i			= number.nextInt(3);
+		i				= i+1;
 		
-		CheckRoom(Room);
-		
-		if(Object.equals("key") && Items.Key == true) {
-			System.out.println(Items.KeyDesc[i]);
+		for(int k=0; k<Items.ItemDesc.length; k++) {
+			if(Object.equalsIgnoreCase(Items.ItemDesc[k][0])) {
+				System.out.println(Items.ItemDesc[k][i]);
+			}
 		}
-		if(Object.equals("lock") && Items.Lock == true) {
-			System.out.println(Items.LockDesc[i]);
-		}
-		if(Object.equals("desk") && Items.Desk == true) {
-			System.out.println(Items.DeskDesc[i]);
-		}
-		if(Object.equals("wall")) {
-			System.out.println(Items.WallDesc[i]);
-		}
-		if(Object.equals("book") && Items.Book == true) {
-			System.out.println(Items.BookDesc[i]);
-		}
-		if(Object.equals("door") && Items.Door == true) {
-			System.out.println(Items.DoorDesc[i]);
-		}
-		if(Object.equals("locked-door") && Items.LockDoor == true) {
-			System.out.println(Items.LockDoorDesc[i]);
-		}
-		if(Object.equals("hatch") && Items.Hatch == true) {
-			System.out.println(Items.HatchDesc[i]);
-		}
-		CloseRoom();
 	}
 	
 	public static void InvSee() {
@@ -144,9 +74,9 @@ public class Actions {
 		boolean added	= false;
 		int ItemID	= GetItemID(Item);
 		
-		for(int i=0; i<Items.RoomItems.length; i++) {
+		for(int i=0; i<Items.RoomItems.length-1; i++) {
 			if(Items.RoomItems[Rooms.currentRoom-1][i] == ItemID) {
-				for(int j=0; j<Inventory.length; j++) {
+				for(int j=0; j<Inventory.length-1; j++) {
 					if(Inventory[j] == 0) {
 						Inventory[j]	= ItemID;
 						added			= true;
@@ -174,7 +104,9 @@ public class Actions {
 		
 		if(ItemCount != 0) {
 			for(int i=0; i<Items.RoomItems[Rooms.currentRoom-1].length; i++) {
-				System.out.println(" * "+GetItemName(Items.RoomItems[Rooms.currentRoom-1][i]));
+				if(Items.RoomItems[Rooms.currentRoom-1][i] != 0) {
+					System.out.println(" * "+GetItemName(Items.RoomItems[Rooms.currentRoom-1][i]));
+				}
 			}
 		}
 	}
@@ -207,6 +139,18 @@ public class Actions {
 		}
 		else {
 			System.out.println(Item+" dropped.");
+		}
+	}
+	
+	public static void Read(String material) {
+		for(int j=0; j<Inventory.length; j++) {
+			if(material.equals("book") && Inventory[j] == 8) {
+				System.out.println("hello :D");
+				System.out.println(Items.BookInfo[Rooms.currentRoom-1]);
+			}
+			if(material.equals("letter") && Inventory[j] == 9) {
+				System.out.println(Items.LetterInfo[Rooms.currentRoom-1]);
+			}
 		}
 	}
 }
