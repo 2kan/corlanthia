@@ -1,6 +1,10 @@
+---- NOTICE: Corlanthia is no longer under development due to my joining of a professional game studio, I'm still deciding whether or not I'll leave the repo up or not, but for now it's still here ----
+
 Corlanthia is an in-development text adventure game written in Java.
 
 Corlanthia has some basic features implemented; so far users can move cardinally, inspect items, pickup items, see their inventory, drop one or many items, look in the room to see what objects are there. There is also a "debug" command that so far adds items to a room and displays all of the items in the room.
+
+With the way that books are implemented, there can only be one per room.
 
 ** UPDATE v0.1.9 **
 
