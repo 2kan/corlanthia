@@ -7,7 +7,7 @@ Corlanthia has some basic features implemented; so far users can move cardinally
 
 With the way that books are implemented, there can only be one per room.
 
-UPDATE v0.1.9
+Update v0.1.9
 --
 
 + Added command 'lookat' to replace look, works the same as inspect
@@ -22,15 +22,16 @@ UPDATE v0.1.9
 - Removed CheckRoom and CloseRoom methods
 
 
-NEXT ACTION
+Next Update
 --
 
-Add more debugging commands.
+* Cleaner code
+* Bug fixes
+* Much better NPC support
+* Overhaul of how NPCs are handled
 
-Eventually add support for NPC-like features.
 
-
-LICENSE INFO
+License Info
 --
 
 Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License. More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
