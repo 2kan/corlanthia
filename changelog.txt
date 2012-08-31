@@ -50,3 +50,24 @@ v0.1.9
 - Removed 'look' command (still remains in debug though)
 - Removed CheckRoom and CloseRoom methods
 
+v0.2
+
++ Added GUI
++ Implemented NPCs
++ Added support for attacking NPCs
+
+v0.2.1
+
++ Added title to the main window
++ Pressing the up arrow will put the player's last command into the command text field
++ Added Books class to handle the names, descriptions and contents of books
++ Added 'dance' command
+* Changed license from Creative Commons Attribution 3.0 Unported to GPL
++ Made the panel on the left display the player's inventory
+* Fixed inventory system not working properly
+* Fixed GUI layout to be perfectly aligned on Windows (not OSX or Linux though)
+* Fixed bug to do with exiting from menu
+* Refactored entire book system
+* Added more items to rooms
+* Changed most variable name to start with lowercase letter
+* Slightly refactored main command-interpretation method to use a series of "else if" selections rather than solely "if" selections
