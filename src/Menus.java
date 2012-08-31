@@ -6,17 +6,14 @@ public class Menus {
 	static Scanner input		= new Scanner(System.in);
 	
 	public static void MainMenu() {
-		System.out.println("" +
+		GUI.log("" +
 				"Welcome to the CORLANTHIA proof-of-concept demo.\n\n" +
 				"	1. Play\n" +
 				"	2. About\n" +
 				"	3. Exit\n");
-		selection = input.nextInt();
-		
-		
-		
+				
 		switch(selection) {
-		case 1:	Game.Intro(); break;
+		case 1:	Game.intro(); break;
 		case 2: About(); break;
 		case 3: System.exit(1);
 		
@@ -24,22 +21,15 @@ public class Menus {
 		
 	}
 
-	private static void About() {
-		System.out.println("" +
-				"\nCorlanthia is a text adventure game\n\n" +
-				Game.Version + "\n" +
+	public static void About() {
+		GUI.log("\nCorlanthia is a text adventure game\n\n" +
+				Game.version + "\n" +
 				"This is merely a proof-of-concept demo and does not represent what the finished game will be.\n\n" +
 				"Type 'exit' to go back to the main menu");
-		Sselection = input.nextLine();
-		
-		if(Sselection.equalsIgnoreCase("exit")) {
-			MainMenu();
-		}
-		
 	}
 	
 	public static void Help() {
-		System.out.println("" +
+		GUI.log("" +
 				"Commands:\n" +
 				"north		exit through the northern door.\n" +
 				"east		exit through the eastern door.\n" +

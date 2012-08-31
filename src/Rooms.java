@@ -3,15 +3,6 @@
  * Class defines what the rooms look like with 2d arrays.
  * Numbers represent an object.
  * 
- * Item ID numbers
- * 0	air
- * 1	wall
- * 2	window
- * 3	door
- * 4	locked door
- * 5	table
- * 6	lamp
- * 7	key
  * 
  * Rooms
  * 1	Starting Hall
@@ -51,7 +42,7 @@ public class Rooms {
 		return room;
 	}
 	
-	public static int[][] ChangeRoom(String direction, int CurrentRoom) {
+	public static int[][] ChangeRoom(String direction, int CurrentRoom, boolean start) {
 		boolean broken	= false;
 		int NewRoom		= 0;
 		int[][] layout	=  {{0,0,0,1,0,0,0},
@@ -62,50 +53,52 @@ public class Rooms {
 							{0,0,0,9,0,0,0},
 							{0,0,0,0,0,0,0}};
 		
-		for(int i=0; i<layout.length; i++) {
-			for(int j=0; j<layout[i].length; j++) {
-				if(layout[i][j] == CurrentRoom) {
-					if(direction.equals("north")) {
-						try {
-							NewRoom	= layout[i-1][j];
-						} catch(Exception e) {
-							System.out.println("There is no room to the north.");
+		if(!start) {
+			for(int i=0; i<layout.length; i++) {
+				for(int j=0; j<layout[i].length; j++) {
+					if(layout[i][j] == CurrentRoom) {
+						if(direction.equals("north")) {
+							try {
+								NewRoom	= layout[i-1][j];
+							} catch(Exception e) {
+								GUI.log("There is no room to the north.");
+							}
+							broken	= true;
+							break;
 						}
-						broken	= true;
-						break;
-					}
-					if(direction.equals("east")) {
-						try {
-							NewRoom	= layout[i][j+1];
-						} catch(Exception e) {
-							System.out.println("There is no room to the east.");
+						if(direction.equals("east")) {
+							try {
+								NewRoom	= layout[i][j+1];
+							} catch(Exception e) {
+								GUI.log("There is no room to the east.");
+							}
+							broken	= true;
+							break;
 						}
-						broken	= true;
-						break;
-					}
-					if(direction.equals("south")) {
-						try {
-							NewRoom	= layout[i+1][j];
-						} catch(Exception e) {
-							System.out.println("There is no room to the south.");
+						if(direction.equals("south")) {
+							try {
+								NewRoom	= layout[i+1][j];
+							} catch(Exception e) {
+								GUI.log("There is no room to the south.");
+							}
+							broken	= true;
+							break;
 						}
-						broken	= true;
-						break;
-					}
-					if(direction.equals("west")){
-						try {
-							NewRoom	= layout[i][j-1];
-						} catch(Exception e) {
-							System.out.println("There is no room to the west.");
+						if(direction.equals("west")){
+							try {
+								NewRoom	= layout[i][j-1];
+							} catch(Exception e) {
+								GUI.log("There is no room to the west.");
+							}
+							broken	= true;
+							break;
 						}
-						broken	= true;
-						break;
 					}
+					
 				}
-				
-			}
-			if(broken == true) {
-				break;
+				if(broken == true) {
+					break;
+				}
 			}
 		}
 		
@@ -113,7 +106,18 @@ public class Rooms {
 			NewRoom	= 1337;
 		}
 		
-		int[][] room	= GetRoom(NewRoom);
+		int[][] room;
+		if(start) {
+			room	= GetRoom(1);
+		} else {
+			room	= GetRoom(NewRoom);
+		}
+		for(int i=0; i<visitedRooms.length; i++) {
+			if(visitedRooms[i] == 0) {
+				visitedRooms[i]	= currentRoom;
+				break;
+			}
+		}
 		RoomChange		= true;
 		return room;
 	}
@@ -129,8 +133,8 @@ public class Rooms {
 		
 		currentRoomName	= "Starting Hall";
 		currentRoom		= 1;
-		RoomDescription	= "The room you are in is a small square one made of solid stone. It is cold and there is a ladder " +
-				"going up through a hatch. It is obvious that people have been here before you.";
+		RoomDescription	= "The room is small, square and made of solid stone. It is cold and there is a ladder " +
+				"going up through a hatch.";
 		return room;
 	}
 	

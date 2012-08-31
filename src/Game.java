@@ -1,10 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.1.9
- * 
- * Corlanthia is protected by the Creative Commons Attribution 3.0 Unported License.
- * More information about the license can be found here: http://creativecommons.org/licenses/by/3.0/
+ * @version	0.2.1
  * 
  * Corlanthia is unfinished and the proof-of-concept is still being developed.
  * This game is intended to be a 'complete' game with diverse mechanics and a gripping story,
@@ -20,121 +17,169 @@ import java.util.*;
 
 public class Game {
 	
-	private static Scanner GameScan	= new Scanner(System.in);
-	private static String GameInput	= "";
-	public static String Version	= "Corlanthia proof-of-concept v0.1.9";
+	//private static Scanner GameScan	= new Scanner(System.in);
+	//private static String GameInput	= "";
+	public static String name		= "Corlanthia";
+	public static String version	= "0.2.1";
+	public static String lastCmd	= "";
+	private static boolean inMainMenu	= false;
 	
 	public static void main(String[] args) {
-		Menus.MainMenu();
+		GUI.init();
+		//Menus.MainMenu();
+		
+		// Sleep to let the GUI build
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {}
+		intro();
 	}
 	
-	public static void Intro() {
-		System.out.println("You wake up in a daze, there is a lump on your head and you don't know how it got there. " +
-				"The last thing you can remember was when you were out drinking with your mates and some unexpected +" +
+	/**
+	 * Show the initial description of the scenario, then call <code>start</code>.
+	 */
+	public static void intro() {
+		GUI.log("You wake up in a daze, there is a lump on your head and you don't know how it got there. " +
+				"The last thing you can remember was when you were out drinking with your mates and some unexpected " +
 				"visitors arrived.\n\n" +
 				"The room you are in seems like it was from the medeval times and all you can smell are decaying rats.");
-		Start();
+		start();
 	}
 	
-	public static void Start() {
-		int[][] room	= Rooms.GetRoom(1);
-		Rooms.currentRoom	= 1;
-		
-		System.out.println(Rooms.currentRoom+".");
-		System.out.println("Layout of room:");
-		for(int i=0; i<room.length; i++) {
-			for(int j=0; j<room[i].length; j++){
-				System.out.print(room[i][j]);
-			}
-			System.out.println();
-		}
-		
-		instruction(1, false);
-		
+	/**
+	 * Set the room to the starting room and show the room's info by calling <code>showRoomInfo</code>.
+	 */
+	public static void start() {
+		Rooms.currentRoom		= 1;
+		Rooms.ChangeRoom("", -1, true);
+		showRoomInfo(1);
 	}
 	
-	public static void instruction(int inRoom, boolean iterated) {
-		
-		if(iterated == false) {
-			System.out.println("\n --- "+Rooms.currentRoomName+" --- \n");
-			System.out.println(">> "+Rooms.RoomDescription);
-			Rooms.visitedRooms[Rooms.currentRoom]	= 1;
-			iterated	= true;
-		}
-		System.out.print("> ");
-		GameInput	= GameScan.nextLine();
-		
-		if(GameInput.equals(null) || GameInput.equals("")) {
-			instruction(Rooms.currentRoom, true);
-		}
-		
-		if(GameInput.equalsIgnoreCase("help")) {
-			Menus.Help();
-			System.out.println();
-			instruction(inRoom, true);
-		}
-		if(GameInput.equalsIgnoreCase("exit")) {
-			Menus.MainMenu();
-		}
-		
-		if(GameInput.equalsIgnoreCase("north") ||
-				GameInput.equalsIgnoreCase("east") ||
-				GameInput.equalsIgnoreCase("south") ||
-				GameInput.equalsIgnoreCase("west")) {
-			Rooms.ChangeRoom(GameInput, inRoom);
-		}
-		
-		if(GameInput.equalsIgnoreCase("version")) {
-			System.out.println(Version);
-		}
-		
-		
-		StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
-		String command					= commandTokens.nextToken();
-		int commandCount				= commandTokens.countTokens();
-		
-		if(command.equals("inspect")) {
-			if(commandCount == 0) {
-				System.out.println("Type 'inspect' followed by an item to inspect.");
+	/**
+	 * Shows the specified room's information (name, description)
+	 * @param inRoom	room to have info shown
+	 */
+	public static void showRoomInfo(int inRoom) {
+		GUI.log("\n--- "+Rooms.currentRoomName+" --- \n\n" +
+				Rooms.RoomDescription);
+		Rooms.visitedRooms[Rooms.currentRoom]	= 1;
+	}
+	
+	/**
+	 * Interprets the command, <code>GameInput</code> and calls the corresponding method.
+	 * 
+	 * If the command is not recognized, a message saying that couldn't be interpreted is shown.
+	 * @param GameInput	the command to be interpreted
+	 */
+	public static void input(String GameInput) {
+		GUI.log("\n> "+GameInput);
+		boolean interpreted	= false;
+		while(!interpreted) {
+			if(inMainMenu) {
+				if(GameInput.equals("1") || GameInput.equals("1.") || GameInput.equalsIgnoreCase("Play")) {
+					inMainMenu	= false;
+				} else if(GameInput.equals("2") || GameInput.equals("2.") || GameInput.equalsIgnoreCase("About")) {
+					Menus.About();
+				} else if(GameInput.equals("3") || GameInput.equals("3.") || GameInput.equalsIgnoreCase("Exit")) {
+					System.exit(0);
+				}
+				interpreted	= true;
 			} else {
-				Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
+				if(GameInput.equals(null) || GameInput.equals("")) {
+					showRoomInfo(Rooms.currentRoom);
+					interpreted	= true;
+				} else if(GameInput.equalsIgnoreCase("help")) {
+					Menus.Help();
+					interpreted	= true;
+				} else if(GameInput.equalsIgnoreCase("exit") || GameInput.equalsIgnoreCase("menu")) {
+					Menus.MainMenu();
+					inMainMenu	= true;
+					interpreted	= true;
+				} else if(GameInput.equalsIgnoreCase("north") || GameInput.equalsIgnoreCase("east") ||
+						GameInput.equalsIgnoreCase("south") || GameInput.equalsIgnoreCase("west")) {
+					Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
+					if(Rooms.RoomChange == true) {
+						showRoomInfo(Rooms.currentRoom);
+					}
+					interpreted	= true;
+				} else if(GameInput.equalsIgnoreCase("intro")) {
+					showRoomInfo(Rooms.currentRoom);
+					interpreted	= true;
+				} else if(GameInput.equalsIgnoreCase("version")) {
+					GUI.log(version);
+					interpreted	= true;
+				}
+				
+				
+				StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
+				String command					= commandTokens.nextToken();
+				int commandCount				= commandTokens.countTokens();
+				
+				if(command.equals("inspect")) {
+					if(commandCount == 0) {
+						GUI.log("Type 'inspect' followed by an item to inspect.");
+					} else {
+						Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
+					}
+					interpreted	= true;
+				} else if(command.equals("inventory") || command.equals("invsee")) {
+					Actions.InvSee();
+					GUI.updateInventory(Actions.Inventory);
+					interpreted	= true;
+				} else if(command.equals("pickup")) {
+					if(commandCount == 1) {
+						Actions.Pickup(commandTokens.nextToken());
+						GUI.updateInventory(Actions.Inventory);
+					} else {
+						GUI.log("Type 'pickup' followed by an item you would like to pickup.");
+					}
+					interpreted	= true;
+				} else if(command.equals("lookat") || command.equals("look") || command.equals("search")) {
+					Actions.Look();
+					interpreted	= true;
+				} else if(command.equals("drop")) {
+					Actions.Drop(commandTokens.nextToken());
+					GUI.updateInventory(Actions.Inventory);
+					interpreted	= true;
+				} else if(command.equals("debug")) {
+					if(commandCount == 1) {
+						Debug.Actions(commandTokens.nextToken(), null);
+					}
+					if(commandCount == 2) {
+						Debug.Actions(commandTokens.nextToken(), commandTokens.nextToken());
+					}
+					interpreted	= true;
+				} else if(command.equals("read")) {
+					if(commandTokens.hasMoreTokens()) {
+						String title	= "";
+						while(commandTokens.hasMoreTokens()) {
+							title	+= commandTokens.nextToken();
+						}
+						Actions.Read(title);
+					}
+					interpreted	= true;
+				} else if(command.equals("herp")) {
+					GUI.log("derp");
+					interpreted	= true;
+				} else if(command.equals("derp")) {
+					GUI.log("herp");
+					interpreted	= true;
+				} else if(command.equalsIgnoreCase("dance") && Rooms.currentRoom != 9) {
+					GUI.log("That wont do any good here.");
+					interpreted	= true;
+				} else if(command.equalsIgnoreCase("dance") && Rooms.currentRoom == 9) {
+					GUI.log("You start to dance with the lobsters and they open and close their claws as if they are " +
+							"maracas in their excitement.");
+					interpreted	= true;
+				}
+				
+				if(!interpreted) {
+					GUI.log("What did you say?");
+					interpreted	= true;
+				}
 			}
 		}
-		if(command.equals("inventory") || command.equals("invsee")) {
-			Actions.InvSee();
-		}
-		if(command.equals("pickup")) {
-			Actions.Pickup(commandTokens.nextToken());
-		}
-		if(command.equals("lookat")) {
-			Actions.Look();
-			instruction(Rooms.currentRoom, true);
-		}
-		if(command.equals("drop")) {
-			Actions.Drop(commandTokens.nextToken());
-		}
-		if(command.equals("debug")) {
-			if(commandCount == 1) {
-				Debug.Actions(commandTokens.nextToken(), null);
-			}
-			if(commandCount == 2) {
-				Debug.Actions(commandTokens.nextToken(), commandTokens.nextToken());
-			}
-		}
-		if(command.equals("read")) {
-			if(commandTokens.hasMoreTokens()) {
-				Actions.Read(commandTokens.nextToken());
-			}
-		}
-		
-		if(Rooms.RoomChange == true) {
-			iterated	= false;
-		} else {
-			iterated	= true;
-		}
-		
-		instruction(Rooms.currentRoom, iterated);
+		lastCmd	= GameInput;
+		//input();
 	}
-	
-	
 }
