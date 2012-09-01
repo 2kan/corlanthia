@@ -32,6 +32,7 @@ Next Actions
 + Locked doors
 + Can read from letters
 * Keys will have an actual purpose
+* Room descriptions will only be shown when walking into the room for the first time
 
 
 License Info
