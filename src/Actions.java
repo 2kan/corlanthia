@@ -183,6 +183,20 @@ public class Actions {
 		}
 	}
 	
+	/**
+	 * Find whether or not the specified item ID is in the player's inventory
+	 * @param itemId	the item ID to search for
+	 * @return	true if the player's inventory contains the specified item id
+	 */
+	public static boolean inventoryContains(int itemId) {
+		for(int i=0; i<Inventory.length; i++) {
+			if(Inventory[i] == itemId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public static void Read(String book) {
 		String[] books	= Books.getBookList();
 		for(int j=0; j<Inventory.length; j++) {

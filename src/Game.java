@@ -97,7 +97,23 @@ public class Game {
 					interpreted	= true;
 				} else if(GameInput.equalsIgnoreCase("north") || GameInput.equalsIgnoreCase("east") ||
 						GameInput.equalsIgnoreCase("south") || GameInput.equalsIgnoreCase("west")) {
-					Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
+					Rooms.RoomChange	= false;
+					int nextRoom	= Rooms.getNextRoomId(GameInput, Rooms.currentRoom);
+					System.out.println("Current room:" + Rooms.currentRoom + ", next room direction:" + GameInput + ", next room:" + nextRoom);
+					if(!Rooms.isLocked(nextRoom)) {
+						Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
+						Rooms.RoomChange	= true;
+					} else {
+						System.out.println("nextRoom:"+nextRoom+" keyIdRequired:"+Rooms.keyIdRequired(nextRoom));
+						if(Actions.inventoryContains(Rooms.keyIdRequired(nextRoom))) {
+							Rooms.unlockDoor(nextRoom);
+							GUI.log("Door unlocked with " + Actions.GetItemName(Rooms.keyIdRequired(nextRoom)));
+							Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
+							Rooms.RoomChange	= true;
+						} else {
+							GUI.log("This door appears to be locked.");
+						}
+					}
 					if(Rooms.RoomChange == true) {
 						showRoomInfo(Rooms.currentRoom);
 					}

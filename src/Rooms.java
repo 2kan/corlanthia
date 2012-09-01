@@ -23,7 +23,15 @@ public class Rooms {
 	public static int currentRoom			= 0;
 	public static String RoomDescription	= "";
 	public static boolean RoomChange		= false;
-	public static int[] visitedRooms			= {0,0,0,0,0,0,0,0,0};
+	public static int[] visitedRooms		= {0,0,0,0,0,0,0,0,0};
+	private static int[] keyRequired		= {0,0,0,0,401,0,402,0,403};
+	private static int[][] layout	=  {{0,0,0,1,0,0,0},
+										{0,0,0,2,0,0,0},
+										{0,0,0,3,5,6,0},
+										{0,0,0,4,0,7,0},
+										{0,0,0,8,0,0,0},
+										{0,0,0,9,0,0,0},
+										{0,0,0,0,0,0,0}};
 	
 	public static int[][] GetRoom(int current) {
 		int[][] room	= {{}};
@@ -42,16 +50,65 @@ public class Rooms {
 		return room;
 	}
 	
+	public static boolean isLocked(int roomId) {
+		if(keyRequired[roomId-1] != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static void unlockDoor(int roomId) {
+		keyRequired[roomId-1]	= 0;
+	}
+	
+	public static int keyIdRequired(int roomId) {
+		return keyRequired[roomId-1];
+	}
+	
+	public static int getNextRoomId(String direction, int thisRoomId) {
+		// Get currentRoom coords
+		int y	= -1;
+		int x	= -1;
+		boolean foundCoords	= false;
+		for(int yi=0; yi<layout.length; yi++) {
+			for(int xi=0; xi<layout[0].length; xi++) {
+				if(layout[yi][xi] == thisRoomId) {
+					y	= yi;
+					x	= xi;
+					foundCoords	= true;
+					break;
+				}
+			}
+			if(foundCoords) {
+				break;
+			}
+		}
+		
+		if(y != -1 && x != -1) {
+			try {
+				if(direction.equals("north")) {
+					return layout[y-1][x];
+				} else if(direction.equals("east")) {
+					return layout[y][x+1];
+				} else if(direction.equals("south")) {
+					return layout[y+1][x];
+				} else if(direction.equals("west")) {
+					return layout[y][x-1];
+				} else {
+					return thisRoomId;
+				}
+			} catch(ArrayIndexOutOfBoundsException e) {
+				System.err.println("Cannot find next room in cardinal-direction: " + direction + " from roomId: " + thisRoomId);
+			}
+		}
+		System.out.println(thisRoomId+"");
+		return thisRoomId;
+	}
+	
 	public static int[][] ChangeRoom(String direction, int CurrentRoom, boolean start) {
 		boolean broken	= false;
 		int NewRoom		= 0;
-		int[][] layout	=  {{0,0,0,1,0,0,0},
-							{0,0,0,2,0,0,0},
-							{0,0,0,3,5,6,0},
-							{0,0,0,4,0,7,0},
-							{0,0,0,8,0,0,0},
-							{0,0,0,9,0,0,0},
-							{0,0,0,0,0,0,0}};
 		
 		if(!start) {
 			for(int i=0; i<layout.length; i++) {
