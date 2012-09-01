@@ -1,7 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.2.1
+ * @version	0.3
  * 
  * Corlanthia is unfinished and the proof-of-concept is still being developed.
  * This game is intended to be a 'complete' game with diverse mechanics and a gripping story,
@@ -20,7 +20,7 @@ public class Game {
 	//private static Scanner GameScan	= new Scanner(System.in);
 	//private static String GameInput	= "";
 	public static String name		= "Corlanthia";
-	public static String version	= "0.2.1";
+	public static String version	= "0.3";
 	public static String lastCmd	= "";
 	private static boolean inMainMenu	= false;
 	
