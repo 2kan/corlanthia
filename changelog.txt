@@ -50,11 +50,14 @@ v0.1.9
 - Removed 'look' command (still remains in debug though)
 - Removed CheckRoom and CloseRoom methods
 
+
 v0.2
 
 + Added GUI
 + Implemented NPCs
 + Added support for attacking NPCs
+
+
 
 v0.2.1
 
@@ -71,3 +74,9 @@ v0.2.1
 * Added more items to rooms
 * Changed most variable name to start with lowercase letter
 * Slightly refactored main command-interpretation method to use a series of "else if" selections rather than solely "if" selections
+
+
+v0.3
+
++ Added locked doors
++ Added coloured keys
