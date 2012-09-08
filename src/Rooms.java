@@ -24,7 +24,7 @@ public class Rooms {
 	public static String RoomDescription	= "";
 	public static boolean RoomChange		= false;
 	public static int[] visitedRooms		= {0,0,0,0,0,0,0,0,0};
-	private static int[] keyRequired		= {0,0,0,0,401,0,402,0,403};
+	private static int[] keyRequired		= {0,0,0,0,402,0,401,0,400};
 	private static int[][] layout	=  {{0,0,0,1,0,0,0},
 										{0,0,0,2,0,0,0},
 										{0,0,0,3,5,6,0},
