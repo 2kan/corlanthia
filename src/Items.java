@@ -31,13 +31,17 @@ public class Items {
 										   {"Hatch","An old hatch.","It's made of old pine wood.","It's unlocked."}};
 	
 	// The locations of ListItemsID correspond to ListItems. For example, ListItems[1] is the name for ListItemsID[1].
-	public static String[] listItems	= {"key","book","letter","sword","axe"};
+	public static String[] listItems	= {"Skelington Key","Book","Letter","Sword","Axe"};
 	public static int[] listItemsID		= {7,8,9,10,11};
 	
+	// Keys
+	public static String[] keyNames	= {"Blue Key", "Orange Key", "Rusted Key"};
+	public static int[] keyItemIDs	= {400, 401, 402};
+	
 	// Items in each room.
-	public static int[][] roomItems		=  {{8,9,11,300,0,0,0,0},
-											{7,9,10,10,8,10,11,301},
-											{8,10,11,302,0,0,0,0},
+	public static int[][] roomItems		=  {{8,9,11,300,0,0,402,0},
+											{400,9,10,10,8,10,11,301},
+											{8,10,11,302,401,0,0,0},
 											{11,8,9,303,0,0,0,0},
 											{11,10,0,0,0,0,0,0},
 											{9,8,0,0,0,0,0,0},
