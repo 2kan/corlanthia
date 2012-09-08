@@ -58,7 +58,6 @@ v0.2
 + Added support for attacking NPCs
 
 
-
 v0.2.1
 
 + Added title to the main window
@@ -80,3 +79,17 @@ v0.3
 
 + Added locked doors
 + Added coloured keys
+
+
+v0.3.1
+
++ Doors can now be locked
++ Added keys
++ Keys are destroyed when used to unlock a door
++ Added dance command
+* Fixed empty line at top of inventory text-area
+* Fixed ArrayIndexOutOfBoundsException when trying to go in a direction with no room
+* Made 'key' from items list into a skeleton key (spelled 'Skellington Key' in items array) which unlocks every door and is not destroyed upon opening
+* Command history is now tracked infinitely (until the vm crashes)
+* Other small fixes
+* Some polishing of existing features
