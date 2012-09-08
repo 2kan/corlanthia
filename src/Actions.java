@@ -3,7 +3,7 @@ import java.util.Random;
 public class Actions {
 	
 	public static int[] Inventory	= {0,0,0,0,0,0,0,0};
-	public static int ItemCount			= 0;
+	public static int ItemCount		= 0;
 	
 	public static void CountItems(int Room) {
 		ItemCount	= 0;
@@ -22,9 +22,16 @@ public class Actions {
 			}
 		}
 		
-		// If it hasn't been found, look for a book with the item name
+		// If the item hasn't been found, look for a book with the item name
 		for(int i=300; i<Books.bookCount()+300; i++) {
 			if(Books.getName(i).equals(oldItem)) {
+				return i;
+			}
+		}
+	
+		// If the item still hasn't been found, look for a key with the item name
+		for(int i=400; i<Items.keyItemIDs.length+400; i++) {
+			if(Items.keyNames[i-400].equalsIgnoreCase(oldItem)) {
 				return i;
 			}
 		}
@@ -39,11 +46,16 @@ public class Actions {
 			if(Items.listItemsID[i] == ItemID) {
 				ItemName	= Items.listItems[i];
 			}
-			
-			if(ItemID >= 300 && ItemID <= 400) {
-				ItemName	= "Book: "+Books.getName(ItemID);
-			}
 		}
+		
+		if(ItemID >= 300 && ItemID < 400) {
+			ItemName	= "Book: "+Books.getName(ItemID);
+		}
+		
+		if(ItemID >= 400 && ItemID < 500) {
+			ItemName	= Items.keyNames[ItemID-400];
+		}
+		
 		return ItemName;
 	}
 	
@@ -99,7 +111,9 @@ public class Actions {
 	
 	public static void Pickup(String Item) {
 		boolean added	= false;
+		//GUI.log("Finding item id for \""+Item+"\"");
 		int ItemID	= GetItemID(Item);
+		//GUI.log("Item id is \""+ItemID+"\"");
 		
 		for(int i=0; i<Items.roomItems.length-1; i++) {
 			if(Items.roomItems[Rooms.currentRoom-1][i] == ItemID) {
@@ -204,6 +218,19 @@ public class Actions {
 				if(GetItemName(Inventory[j]).endsWith(books[i])) {
 					GUI.log(Books.getName(Inventory[j]) + "\n" + Books.getBook(Inventory[j]));
 				}
+			}
+		}
+	}
+	
+	public static void destroyInventoryItem(String itemName) {
+		destroyInventoryItem(GetItemID(itemName));
+	}
+	
+	public static void destroyInventoryItem(int itemID) {
+		for(int i=0; i<Inventory.length; i++) {
+			if(Inventory[i] == itemID) {
+				Inventory[i]	= 0;
+				break;
 			}
 		}
 	}
