@@ -1,37 +1,33 @@
-Development is starting again after a long break
+Corlanthia
 --
 
 Corlanthia is an in-development text adventure game written in Java.
 
 Corlanthia has some basic features implemented; so far users can move cardinally, inspect items, pickup items, see their inventory, drop one or many items, look in the room to see what objects are there. There is also a "debug" command that so far adds items to a room and displays all of the items in the room.
 
-Update v0.2.1
+Update v0.3.1
 --
 
-+ Added title to the main window
-+ Pressing the up arrow will put the player's last command into the command text field
-+ Added Books class to handle the names, descriptions and contents of books
-+ Added 'dance' command
-* Changed license from Creative Commons Attribution 3.0 Unported to GPL
-+ Made the panel on the left display the player's inventory
-* Fixed inventory system not working properly
-* Fixed GUI layout to be perfectly aligned on Windows (not OSX or Linux though)
-* Fixed bug to do with exiting from menu
-* Refactored entire book system
-* Added more items to rooms
-* Changed most variable name to start with lowercase letter
-* Slightly refactored main command-interpretation method to use a series of "else if" selections rather than solely "if" selections
-* Changed Inventory array to be of ints, rather than doubles
-- Removed weapon and combat system (weapons still remain items though)
++ Doors can now be locked
++ Added keys
++ Keys are destroyed when used to unlock a door
++ Added dance command
+* Fixed empty line at top of inventory text-area
+* Fixed ArrayIndexOutOfBoundsException when trying to go in a direction with no room
+* Made 'key' from items list into a skeleton key (spelled 'Skellington Key' in items array) which unlocks every door and is not destroyed upon opening
+* Command history is now tracked infinitely (until the vm crashes)
+* Other small fixes
+* Some polishing of existing features
 
 
 Next Actions
 --
 
 + More rooms
-+ Locked doors
 + Can read from letters
-* Keys will have an actual purpose
++ Can inspect doors to get clues as to which key to open it with
++ NPC that can be talked to
+* Books and letters will reveal what kind of key will open which door
 * Room descriptions will only be shown when walking into the room for the first time
 
 
