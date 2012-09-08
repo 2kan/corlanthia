@@ -1,7 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.3
+ * @version	0.3.1
  * 
  * Corlanthia is unfinished and the proof-of-concept is still being developed.
  * This game is intended to be a 'complete' game with diverse mechanics and a gripping story,
@@ -20,8 +20,8 @@ public class Game {
 	//private static Scanner GameScan	= new Scanner(System.in);
 	//private static String GameInput	= "";
 	public static String name		= "Corlanthia";
-	public static String version	= "0.3";
-	public static String lastCmd	= "";
+	public static String version	= "0.3.1";
+	public static ArrayList<String> cmdHistory	= new ArrayList<String>();
 	private static boolean inMainMenu	= false;
 	
 	public static void main(String[] args) {
@@ -60,9 +60,13 @@ public class Game {
 	 * @param inRoom	room to have info shown
 	 */
 	public static void showRoomInfo(int inRoom) {
-		GUI.log("\n--- "+Rooms.currentRoomName+" --- \n\n" +
-				Rooms.RoomDescription);
-		Rooms.visitedRooms[Rooms.currentRoom]	= 1;
+		try {
+			Rooms.visitedRooms[Rooms.currentRoom]	= 1;
+			GUI.log("\n--- "+Rooms.currentRoomName+" --- \n\n" +
+					Rooms.RoomDescription);
+		} catch(ArrayIndexOutOfBoundsException e) {
+			GUI.log("There is no room in that direction.");
+		}
 	}
 	
 	/**
@@ -100,22 +104,29 @@ public class Game {
 					Rooms.RoomChange	= false;
 					int nextRoom	= Rooms.getNextRoomId(GameInput, Rooms.currentRoom);
 					System.out.println("Current room:" + Rooms.currentRoom + ", next room direction:" + GameInput + ", next room:" + nextRoom);
-					if(!Rooms.isLocked(nextRoom)) {
-						Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
-						Rooms.RoomChange	= true;
-					} else {
-						System.out.println("nextRoom:"+nextRoom+" keyIdRequired:"+Rooms.keyIdRequired(nextRoom));
-						if(Actions.inventoryContains(Rooms.keyIdRequired(nextRoom))) {
-							Rooms.unlockDoor(nextRoom);
-							GUI.log("Door unlocked with " + Actions.GetItemName(Rooms.keyIdRequired(nextRoom)));
+					if(nextRoom > 0) {
+						if(!Rooms.isLocked(nextRoom)) {
 							Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
 							Rooms.RoomChange	= true;
 						} else {
-							GUI.log("This door appears to be locked.");
+							System.out.println("nextRoom:"+nextRoom+" keyIdRequired:"+Rooms.keyIdRequired(nextRoom));
+							if(Actions.inventoryContains(Rooms.keyIdRequired(nextRoom))) {
+								int keyid	= Rooms.keyIdRequired(nextRoom);
+								GUI.log("Door unlocked with " + Actions.GetItemName(keyid));
+								Rooms.unlockDoor(nextRoom);
+								Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
+								Actions.destroyInventoryItem(keyid);
+								GUI.updateInventory(Actions.Inventory);
+								Rooms.RoomChange	= true;
+							} else {
+								GUI.log("This door appears to be locked.");
+							}
 						}
-					}
-					if(Rooms.RoomChange == true) {
-						showRoomInfo(Rooms.currentRoom);
+						if(Rooms.RoomChange == true) {
+							showRoomInfo(Rooms.currentRoom);
+						}
+					} else {
+						GUI.log("There is no room in that direction.");
 					}
 					interpreted	= true;
 				} else if(GameInput.equalsIgnoreCase("intro")) {
@@ -125,7 +136,6 @@ public class Game {
 					GUI.log(version);
 					interpreted	= true;
 				}
-				
 				
 				StringTokenizer commandTokens	= new StringTokenizer(GameInput, " ", false);
 				String command					= commandTokens.nextToken();
@@ -143,12 +153,12 @@ public class Game {
 					GUI.updateInventory(Actions.Inventory);
 					interpreted	= true;
 				} else if(command.equals("pickup")) {
-					if(commandCount == 1) {
-						Actions.Pickup(commandTokens.nextToken());
-						GUI.updateInventory(Actions.Inventory);
-					} else {
-						GUI.log("Type 'pickup' followed by an item you would like to pickup.");
+					String item	= "";
+					while(commandTokens.hasMoreTokens()) {
+						item	+= " "+commandTokens.nextToken();
 					}
+					Actions.Pickup(item.substring(1));
+					GUI.updateInventory(Actions.Inventory);
 					interpreted	= true;
 				} else if(command.equals("lookat") || command.equals("look") || command.equals("search")) {
 					Actions.Look();
@@ -195,7 +205,7 @@ public class Game {
 				}
 			}
 		}
-		lastCmd	= GameInput;
+		cmdHistory.add(GameInput);
 		//input();
 	}
 }
