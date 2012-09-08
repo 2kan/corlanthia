@@ -21,6 +21,7 @@ public class GUI extends JFrame {
 	private static JTextField inputField;
 	private static JTextArea console;
 	private static JTextArea inventoryList;
+	private int cmdHistoryCount	= 0;
 
 	/**
 	 * Launch the application.
@@ -60,10 +61,23 @@ public class GUI extends JFrame {
 						Game.input(inputField.getText());
 					} catch(NoSuchElementException e) {}
 					inputField.setText("");
+					cmdHistoryCount	= 0;
 				}
 				// If UP is pressed, set inputField's text equal to the last command entered
 				if(arg0.getKeyCode() == KeyEvent.VK_UP) {
-					inputField.setText(Game.lastCmd);
+					cmdHistoryCount++;
+					if(Game.cmdHistory.size() >= cmdHistoryCount) {
+						inputField.setText(Game.cmdHistory.get(Game.cmdHistory.size() - cmdHistoryCount));
+					} else {
+						cmdHistoryCount--;
+					}
+				} else if(arg0.getKeyCode() == KeyEvent.VK_DOWN) { 				// If UP is pressed, set inputField's text equal to the last command entered
+					cmdHistoryCount--;
+					if(cmdHistoryCount > 0) {
+						inputField.setText(Game.cmdHistory.get(Game.cmdHistory.size() - cmdHistoryCount));
+					} else {
+						cmdHistoryCount++;
+					}
 				}
 			}
 		});
@@ -105,7 +119,7 @@ public class GUI extends JFrame {
 	public static void updateInventory(int[] inv) {
 		inventoryList.setText("");
 		for(int i=0; i<inv.length; i++) {
-			inventoryList.append("\n"+Actions.GetItemName((int)inv[i]));
+			inventoryList.append(Actions.GetItemName((int)inv[i])+"\n");
 		}
 	}
 	
