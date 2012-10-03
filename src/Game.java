@@ -1,7 +1,7 @@
 /**
  * 
  * @author	Tom Penney
- * @version	0.3.1
+ * @version	1.0
  * 
  * Corlanthia is unfinished and the proof-of-concept is still being developed.
  * This game is intended to be a 'complete' game with diverse mechanics and a gripping story,
@@ -20,7 +20,7 @@ public class Game {
 	//private static Scanner GameScan	= new Scanner(System.in);
 	//private static String GameInput	= "";
 	public static String name		= "Corlanthia";
-	public static String version	= "0.3.1";
+	public static String version	= "1.0";
 	public static ArrayList<String> cmdHistory	= new ArrayList<String>();
 	private static boolean inMainMenu	= false;
 	
@@ -39,10 +39,14 @@ public class Game {
 	 * Show the initial description of the scenario, then call <code>start</code>.
 	 */
 	public static void intro() {
-		GUI.log("You wake up in a daze, there is a lump on your head and you don't know how it got there. " +
-				"The last thing you can remember was when you were out drinking with your mates and some unexpected " +
+		GUI.log("Welcome to Corlanthia. To start, simply type a command into the input box below. For a list of available " +
+				"commands, type \"help\".\n" +
+				"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" +
+				"\n\n" +
+				"You wake up in a daze, there is a lump on your head and you don't know how it got there. " +
+				"The last thing you can remember was drinking a lot with your mates and some unexpected " +
 				"visitors arrived.\n\n" +
-				"The room you are in seems like it was from the medeval times and all you can smell are decaying rats.");
+				"The room you are in seems like it's from the medeval era and all you can smell is decaying rats.");
 		start();
 	}
 	
@@ -103,7 +107,6 @@ public class Game {
 						GameInput.equalsIgnoreCase("south") || GameInput.equalsIgnoreCase("west")) {
 					Rooms.RoomChange	= false;
 					int nextRoom	= Rooms.getNextRoomId(GameInput, Rooms.currentRoom);
-					System.out.println("Current room:" + Rooms.currentRoom + ", next room direction:" + GameInput + ", next room:" + nextRoom);
 					if(nextRoom > 0) {
 						if(!Rooms.isLocked(nextRoom)) {
 							Rooms.ChangeRoom(GameInput, Rooms.currentRoom, false);
@@ -141,11 +144,32 @@ public class Game {
 				String command					= commandTokens.nextToken();
 				int commandCount				= commandTokens.countTokens();
 				
-				if(command.equals("inspect")) {
+				if(command.equals("doors")) {
+					ArrayList<String> doors	= Rooms.getDoors(Rooms.currentRoom);
+					String outputString	= "";
+					if(doors.size() > 1) {
+						outputString	+= "There are doors to the ";
+					} else {
+						outputString	+= "There is a door to the ";
+					}
+					
+					for(int i=0; i<doors.size(); i++) {
+						outputString	+= doors.get(i);
+						if(i != doors.size()-1) {
+							outputString	+= ", ";
+						} else {
+							outputString	+= ".";
+						}
+					}
+					
+					GUI.log(outputString);
+					
+					interpreted	= true;
+				} else if(command.equals("inspect")) {
 					if(commandCount == 0) {
 						GUI.log("Type 'inspect' followed by an item to inspect.");
 					} else {
-						Actions.Inspect(commandTokens.nextToken(), Rooms.currentRoom);
+						Actions.Inspect(commandTokens.nextToken());
 					}
 					interpreted	= true;
 				} else if(command.equals("inventory") || command.equals("invsee")) {
@@ -157,9 +181,14 @@ public class Game {
 					while(commandTokens.hasMoreTokens()) {
 						item	+= " "+commandTokens.nextToken();
 					}
-					Actions.Pickup(item.substring(1));
-					GUI.updateInventory(Actions.Inventory);
-					interpreted	= true;
+					try {
+						Actions.Pickup(item.substring(1));
+						interpreted	= true;
+					} catch(StringIndexOutOfBoundsException e) {
+						interpreted	= false;
+					} finally {
+						GUI.updateInventory(Actions.Inventory);
+					}
 				} else if(command.equals("lookat") || command.equals("look") || command.equals("search")) {
 					Actions.Look();
 					interpreted	= true;
@@ -179,7 +208,7 @@ public class Game {
 					if(commandTokens.hasMoreTokens()) {
 						String title	= "";
 						while(commandTokens.hasMoreTokens()) {
-							title	+= commandTokens.nextToken();
+							title	+= " " + commandTokens.nextToken();
 						}
 						Actions.Read(title);
 					}
