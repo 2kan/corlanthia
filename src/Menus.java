@@ -5,9 +5,12 @@ public class Menus {
 	static String Sselection	= "";
 	static Scanner input		= new Scanner(System.in);
 	
+	/**
+	 * Display the main menu and enter the input options.
+	 */
 	public static void MainMenu() {
 		GUI.log("" +
-				"Welcome to the CORLANTHIA proof-of-concept demo.\n\n" +
+				"Welcome to CORLANTHIA.\n\n" +
 				"	1. Play\n" +
 				"	2. About\n" +
 				"	3. Exit\n");
@@ -20,14 +23,19 @@ public class Menus {
 		}
 		
 	}
-
+	
+	/**
+	 * Display the About text.
+	 */
 	public static void About() {
 		GUI.log("\nCorlanthia is a text adventure game\n\n" +
-				Game.version + "\n" +
-				"This is merely a proof-of-concept demo and does not represent what the finished game will be.\n\n" +
+				"v" + Game.version + "\n" +
 				"Type 'exit' to go back to the main menu");
 	}
 	
+	/**
+	 * Display a list of commands.
+	 */
 	public static void Help() {
 		GUI.log("" +
 				"Commands:\n" +
@@ -37,12 +45,10 @@ public class Menus {
 				"west		exit through the western door.\n" +
 				"exit		go back to the main menu.\n" +
 				"inspect	get more information about an item.\n" +
-				"inventory	see your inventory.\n" +
 				"pickup		pickup an item.\n" +
 				"look		get a list of all of the items in the room.\n" +
-				"drop		drop an item out of your inventory.");
+				"drop		drop an item out of your inventory.\n" +
+				"read		read a book in your inventory.\n" +
+				"dance		begin dancing.");
 	}
-	
-	
-	
 }
