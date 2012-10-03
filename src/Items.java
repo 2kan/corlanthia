@@ -39,15 +39,15 @@ public class Items {
 	public static int[] keyItemIDs	= {400, 401, 402};
 	
 	// Items in each room.
-	public static int[][] roomItems		=  {{8,9,11,300,0,0,402,0},
-											{400,9,10,10,8,10,11,301},
-											{8,10,11,302,401,0,0,0},
-											{11,8,9,303,0,0,0,0},
+	public static int[][] roomItems		=  {{8,0,11,300,0,0,402,0},
+											{400,0,0,10,0,0,11,301},
+											{0,10,11,302,401,0,0,0},
+											{11,0,0,303,0,0,0,0},
 											{11,10,0,0,0,0,0,0},
-											{9,8,0,0,0,0,0,0},
+											{0,0,0,0,0,0,0,0},
 											{10,11,0,0,0,0,0,0},
-											{11,8,0,0,0,0,0,0},
-											{10,9,0,0,0,0,0,0}};
+											{11,0,0,0,0,0,0,0},
+											{10,0,0,0,0,0,0,0}};
 	
 	public static String[] bookInfo		= {"BEWARE THE MAN IN THE TRENCH COAT.",""};
 	public static String[] letterInfo	= {"La de da :D"};
