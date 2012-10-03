@@ -116,6 +116,10 @@ public class GUI extends JFrame {
 		}); 
 	}
 	
+	/**
+	 * Update the inventory list with the array of IDs specified.
+	 * @param inv	the array of item IDs to update the inventory list with
+	 */
 	public static void updateInventory(int[] inv) {
 		inventoryList.setText("");
 		for(int i=0; i<inv.length; i++) {
@@ -123,6 +127,10 @@ public class GUI extends JFrame {
 		}
 	}
 	
+	/**
+	 * Iterate the specified text to the console text box.
+	 * @param output	the text to output
+	 */
 	public static void log(String output) {
 		console.append("\n"+output);
 		console.selectAll();
