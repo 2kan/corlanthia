@@ -1,10 +1,13 @@
 
 public class Debug {
 	
+	/**
+	 * Perform a command used for debugging.
+	 * @param command1	the command to execute
+	 * @param command2	the parameter
+	 */
 	public static void Actions(String command1, String command2) {
-		if(command1.equals("showitems") || command1.equals("look")) {
-			Actions.Look();
-		}
+		// Adds an item ID to the current room
 		if(command1.equals("additem")) {
 			try {
 				Integer.parseInt(command2);
@@ -18,9 +21,6 @@ public class Debug {
 					break;
 				}
 			}
-		}
-		if(command1.equals("itemcount")) {
-			Actions.CountItems(Rooms.currentRoom);
 		}
 	}
 }
