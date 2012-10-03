@@ -93,3 +93,16 @@ v0.3.1
 * Command history is now tracked infinitely (until the vm crashes)
 * Other small fixes
 * Some polishing of existing features
+
+
+v1.0
+
++ Added command that lists available doors in current room
++ Added last of javadoc comments
+* Fixed book reading bug
+* Tidied code
+* Changed all methods returning a 2d integer array to return type void
+* Various other bug fixes
+- Removed NPC class
+- Removed all methods to do with NPCs from other classes
+- Removed unnecessary room maps from room methods
